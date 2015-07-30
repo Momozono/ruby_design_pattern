@@ -1,15 +1,15 @@
 class Gsub
-	def gsub_comment(path)
-	  file = File.open(path, "r")
-	  buffer = file.read
-	  buffer.gsub!(/(=begin)|(=end)/, "")
-	end
+  def gsub_comment(path)
+    file = File.open(path, "r")
+    buffer = file.read
+    buffer.gsub!(/(=begin)|(=end)/, "")
+  end
 
-	def save_item(path, buffer)
-	  f = File.open(path, "w")
-	  f.write(buffer)
-	  f.close
-	end
+  def save_item(path, buffer)
+    f = File.open(path, "w")
+    f.write(buffer)
+    f.close
+  end
 end
 
 file_name = gets.chomp.to_s
