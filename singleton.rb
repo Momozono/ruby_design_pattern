@@ -219,8 +219,36 @@ a_second_logger.error('二つ目のロガー')
 # 間違いなく一度しか現れないということをモデル化するのが目的です
 # 一度しか現れないからこそ、シングルトンをプログラムの部分間をつなぐユニークなコミュニケーションのパイプとして使うことができる →これはダメ
 
+class PreferenceManager
+  def initialize
+    @reader = PrefReader.new
+    @writer = PrefWriter.new
+    @preferences = { :display_splash => false, :background_color => :blue }
+  end
 
+  def save_preferences
+    preferences = {}
+    @writer.write(@preferences)
+  end
 
+  def get_preferences
+    @preferences = @reader.read
+  end
+end
+
+class PrefWriter
+  def write(preferences)
+    connection = DatabaseConnectionManager.instance.get_connection
+    # プリファレンス情報を書き出す
+  end
+end
+
+class PrefReader
+  def read
+    connection = DatabaseConnectionManager.instance.get_connection
+    # プリファレンス情報を読みだしてそれを返す...
+  end
+end
 
 
 

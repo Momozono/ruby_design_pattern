@@ -209,8 +209,6 @@ end
 
 alias_method_chain :write_line, :numbering
 
-
-
 module Logging
   def log(message)
     puts message
@@ -243,9 +241,6 @@ module Logging
 end
 
 include Logging
-log('Heeloo')
-
+log('hello')
 
 # alias_methodはRubyメソッド、alias_method_chainはRailsのActiveSupportのメソッドである
-
-
