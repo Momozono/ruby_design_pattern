@@ -1,82 +1,125 @@
 =begin
-# Name Space
-module Japan
-  module YEAR2013
-    POPULATION = 127300000
-  end
-end
-
-module America
-  module YEAR2013
-    POPULATION = 316740000
-  end
-end
-
-Japan::YEAR2013::POPULATION   # => 127300000
-America::YEAR2013::POPULATION # => 316740000
-=end
-
-
-
 class Duck
   def initialize(name)
     @name = name
   end
-  def eat
-    puts("アヒル #{@name}は食事中です")
-  end
-  def speak
-    puts("アヒル #{@name}がガーガー鳴いています")
-  end
-  def sleep
-    puts("アヒル #{@name}は静かに眠っています")
-  end
-end
 
-class WaterLily
-  def initialize(name)
-    @name = name
+  def eat
+    puts "食べてます"
   end
-  def grow
-    puts "スイレン #{@name}は浮きながら日光を浴びて育ちます"
+
+  def speak
+    puts "鳴いてます"
   end
 end
 
 class Pond
-  def initialize(number_animals, animal_class, number_plants, plant_class)
-    @animal_class = animal_class
-    @plant_class = plant_class
-
+  def initialize(number_animals)
     @animals = []
     number_animals.times do |i|
-      animal = new_organism(:animal, "動物#{i}")
+      duck = new_animal("動物#{i}")
       @animals << animal
-    end
-
-    @plants = []
-    number_plants.times do |i|
-      plant = new_organism(:plant, "植物#{i}")
-      @plants << plant
     end
   end
 
   def simulate_one_day
-    @plants.each  {|plant| plant.grow }
     @animals.each {|animal| animal.speak }
     @animals.each {|animal| animal.eat   }
     @animals.each {|animal| animal.sleep }
   end
+end
 
-  def new_organism(type, name)
-    if type == :animal
-      @animal_class.new(name)
-    elsif type == :plant
-      @plant_class.new(name)
-    else
-      raise "Unknown organism type: #{type}"
-    end
+
+
+class DuckPond < Pond # オブジェクトの生成をサブクラスに委譲する
+  def new_animal(name)
+    Duck.new(name)
   end
 end
 
-pond = Pond.new(3, Duck, 2, WaterLily)
+pond = DuckPond.new(3)
 pond.simulate_one_day
+=end
+
+# ファクトリーとビルダーともにオブジェクトの生成について管理するもの
+
+# ファクトリー → 単純なオブジェクトで有効、正しいオブジェクトを手に入れるのが目的、生成と実装の分離、生成するオブジェクトの指定方法をシンプルに
+# 動作と生成管理を分離する方法です FactoryMethod内でオブジェクトの生成をすることで、生成を生成オブジェクト内にカプセル化
+
+
+# そして、そのオブジェクト生成をするまでの過程が複雑であるほどビルダーのほうが便利になる →組み立ての複雑なオブジェクトで有効、オブジェクトを組み立てるの目的
+
+# ここでいうオブジェクトは、ユーザーが使える準備ができたオブジェクトのこと
+
+
+
+class SetDiscDrive
+  def method_missing(name, *args)
+    words = name.to_s.split('_')
+    raise "undefine command error!" unless words.shift == 'add'
+    words.each do |word|
+      next if word == 'and'
+      add_cd if word == 'cd'
+      add_dvd if word == 'dvd'
+    end
+  end
+
+  def add_cd
+    puts "CDを加えました"
+  end
+
+  def add_dvd
+    puts "DVDを加えました"
+  end
+end
+
+
+disc_builder = SetDiscDrive.new
+disc_builder.add_cd_andy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
