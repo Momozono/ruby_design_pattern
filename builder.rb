@@ -219,7 +219,7 @@ end
 builder.add_dvd_and_harddisk
 
 builder.add_turbo_and_dvd_and_harddisk
-=begin
+
 def method_missing(name, *args)
   words = name.to_s.split('_')
   return super(name, *args) unless words.shift == 'add'
@@ -231,7 +231,7 @@ def method_missing(name, *args)
     turbo if word == 'turbo'
   end
 end
-=end
+
 
 
 # Builderパターンの必要性はアプリケーションが複雑になるにつれ大きくなります
